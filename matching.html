@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Matching game</title>
+	<style type="text/css">
+		
+p{
+  animation: glitch 1s linear infinite;
+}
+
+@keyframes glitch{
+  2%,64%{
+    transform: translate(2px,0) skew(0deg);
+  }
+  4%,60%{
+    transform: translate(-2px,0) skew(0deg);
+  }
+  62%{
+    transform: translate(0,0) skew(5deg); 
+  }
+}
+
+p:before,
+p:after{
+  content: attr(title);
+  position: absolute;
+  left: 0;
+}
+
+p:before{
+  animation: glitchTop 1s linear infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+@keyframes glitchTop{
+  2%,64%{
+    transform: translate(2px,-2px);
+  }
+  4%,60%{
+    transform: translate(-2px,2px);
+  }
+  62%{
+    transform: translate(13px,-1px) skew(-13deg); 
+  }
+}
+
+p:after{
+  animation: glitchBotom 1.5s linear infinite;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes glitchBotom{
+  2%,64%{
+    transform: translate(-2px,0);
+  }
+  4%,60%{
+    transform: translate(-2px,0);
+  }
+  62%{
+    transform: translate(-22px,5px) skew(21deg); 
+  }
+}	
+	
+
+	#rightSide{
+		 border-left: 2px solid black;
+		 left: 500px; 
+	}
+
+	img{
+		position: absolute;
+	}
+	div{
+		position: absolute;
+		width:100%; 
+		height:400px;
+		background-color: rgb(151, 95, 204);
+		
+	}
+	p{
+		margin-left: 15px;
+		font-size:30px;
+	}
+	#theBody{
+		background-color: rgb(151, 95, 204);
+		height: auto;
+	}
+	h1{
+		padding-left: 20px;
+	}
+
+	</style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+</head>
+<body id="theBody" >
+
+	<h1> 🅼🅰🆃🅲🅷🅸🅽🅶 🅶🅰🅼🅴 
+		<button type="button" class="btn btn-dark" style="margin-left:600px;"> <a href="memory.html" style="text-decoration: none;color: bisque;"> Next</button></a>
+		<button type="button" class="btn btn-dark"> <a href="index.html" style="text-decoration: none;color: bisque;"> Back</button></a> 
+	 </h1> 
+
+	<br>
+    
+	<p> 𝗖𝗟𝗜𝗖𝗞 𝗢𝗡 𝗧𝗛𝗘 𝗘𝗫𝗧𝗥𝗔 𝗦𝗠𝗜𝗟𝗜𝗡𝗚 𝗙𝗔𝗖𝗘 𝗢𝗡 𝗧𝗛𝗘 𝗟𝗘𝗙𝗧 </p>
+
+	<div id="leftSide"></div>
+
+
+	<div id="rightSide"></div>
+
+	<script type="text/javascript">
+	
+		 var numberOfFaces = 5;
+		 var theLeftSide = document.getElementById("leftSide");
+		 var theRightSide = document.getElementById("rightSide");
+		 var theBody = document.getElementById("theBody");
+
+		  function generateFaces(){
+		  	for(var i=1; i<=numberOfFaces; i++){
+		  		var image= document.createElement("img");
+		  		image.src= "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+		  		var randomNumerLeft = Math.floor(Math.random()*401);
+		  		var randomNumerTop = Math.floor(Math.random()*401);
+		  		image.style.top= randomNumerTop + "px";
+		  		image.style.left = randomNumerLeft + "px";
+		  		theLeftSide.appendChild(image);
+		  	}
+		  	var leftSideImages = theLeftSide.cloneNode(true);
+		  	
+		  	theLeftSide.lastChild.onclick=
+    		function nextLevel(event){
+
+        	event.stopPropagation();
+
+        	while(theLeftSide.firstChild){theLeftSide.removeChild(theLeftSide.firstChild);}
+        	while(theRightSide.firstChild){theRightSide.removeChild(theRightSide.firstChild);}
+
+        	numberOfFaces += 5;
+
+        	generateFaces(); };
+
+        	theBody.onclick = function gameOver() {
+
+   			 alert("Game Over!");
+
+
+
+    		theBody.onclick = null;
+
+    		theLeftSide.lastChild.onclick = null;
+    	};
+
+		  	leftSideImages.removeChild(leftSideImages.lastChild);
+		  	theRightSide.appendChild(leftSideImages);
+
+
+
+		  }
+		   
+		  window.onload = generateFaces();
+
+	</script>
+    
+ 
+</body>
+</html>
